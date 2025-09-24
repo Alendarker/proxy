@@ -20,7 +20,7 @@ const foreignNameservers = [
 const proxyProviders = {
   // "订阅1": {
   //   "type": "http",
-  //   "url": "https://9SL6MJbgdu.solastme.cc/4678e53c3e82d5959282d28e0f06687f",
+  //   "url": "",
   //   "interval": 86400,
   //   "health-check": {
   //     "enable": true,
@@ -33,7 +33,7 @@ const proxyProviders = {
   // },
   "订阅2": {
     "type": "http",
-    "url": "http://45.62.108.111:45231/myconfig/jtgX1P1I?format=clash",
+    "url": "",
     "interval": 86400,
     "health-check": {
       "enable": true,
