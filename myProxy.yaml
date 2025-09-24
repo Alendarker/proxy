@@ -1,0 +1,6 @@
+    // 自定义规则
+    "DOMAIN-SUFFIX,googleapis.cn,谷歌服务",
+    "DOMAIN-SUFFIX,gstatic.com,谷歌服务",
+    "DOMAIN-SUFFIX,xn--ngstr-lra8j.com,谷歌服务",
+    "DOMAIN-SUFFIX,github.io,国际站点",
+    "DOMAIN,v2rayse.com,国际站点",
