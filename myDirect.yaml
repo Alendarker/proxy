@@ -1,0 +1,4 @@
+payload:
+  # > 直连
+  - DOMAIN-KEYWORD,doc2x
+  - DOMAIN-SUFFIX,noedgeai.com
