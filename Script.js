@@ -20,7 +20,7 @@ const foreignNameservers = [
 const proxyProviders = {
   // "订阅1": {
   //   "type": "http",
-  //   "url": "",
+  //   "url": "填写订阅地址1",
   //   "interval": 86400,
   //   "health-check": {
   //     "enable": true,
@@ -31,19 +31,19 @@ const proxyProviders = {
   //     "additional-prefix": "[订阅1]"
   //   }
   // },
-  "订阅2": {
-    "type": "http",
-    "url": "",
-    "interval": 86400,
-    "health-check": {
-      "enable": true,
-      "url": "https://www.gstatic.com/generate_204",
-      "interval": 300
-    },
-    "override": {
-      "additional-prefix": "[VPS节点]"
-    }    
-  }
+  // "订阅2": {
+  //   "type": "http",
+  //   "url": "填写订阅地址2",
+  //   "interval": 86400,
+  //   "health-check": {
+  //     "enable": true,
+  //     "url": "https://www.gstatic.com/generate_204",
+  //     "interval": 300
+  //   },
+  //   "override": {
+  //     "additional-prefix": "[VPS节点]"
+  //   }    
+  // }
 };
 
 // DNS配置
@@ -84,6 +84,11 @@ const ruleProviderCommon = {
 // 合并后的规则集配置（中文命名）
 const ruleProviders = {
   // 基础规则
+  "自定义拦截": { ...ruleProviderCommon, "behavior": "classical", "url": "https://raw.githubusercontent.com/Alendarker/proxy/refs/heads/clashVerge/myReject.yaml", "path": "./rules/basic/myReject.yaml" },
+  "自定义直连": { ...ruleProviderCommon, "behavior": "classical", "url": "https://raw.githubusercontent.com/Alendarker/proxy/refs/heads/clashVerge/myDirect.yaml", "path": "./rules/basic/myDirect.yaml" },
+  "自定义代理": { ...ruleProviderCommon, "behavior": "classical", "url": "https://raw.githubusercontent.com/Alendarker/proxy/refs/heads/clashVerge/myProxy.yaml", "path": "./rules/basic/myProxy.yaml" },
+  
+  // 基础规则
   "广告拦截": { ...ruleProviderCommon, "behavior": "domain", "url": "https://fastly.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt", "path": "./rules/basic/reject.yaml" },
   "直连域名": { ...ruleProviderCommon, "behavior": "domain", "url": "https://fastly.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/direct.txt", "path": "./rules/basic/direct.yaml" },
   "代理域名": { ...ruleProviderCommon, "behavior": "domain", "url": "https://fastly.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/proxy.txt", "path": "./rules/basic/proxy.yaml" },
@@ -92,7 +97,7 @@ const ruleProviders = {
   "非中国域名": { ...ruleProviderCommon, "behavior": "domain", "url": "https://fastly.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/tld-not-cn.txt", "path": "./rules/basic/tld-not-cn.yaml" },
   "应用程序": { ...ruleProviderCommon, "behavior": "classical", "url": "https://fastly.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/applications.txt", "path": "./rules/basic/applications.yaml" },
   "特殊需求": { ...ruleProviderCommon, "behavior": "classical", "url": "https://ghp.ml1.one/https://raw.githubusercontent.com/dler-io/Rules/main/Clash/Provider/Special.yaml", "path": "./rules/basic/special.yaml" },
-  "代理服务": { ...ruleProviderCommon, "behavior": "classical", "url": "https://ghp.ml1.one/https://raw.githubusercontent.com/dler-io/Rules/main/Clash/Provider/Proxy.yaml", "path": "./rules/basic/proxy.yaml" },
+  "代理服务": { ...ruleProviderCommon, "behavior": "classical", "url": "https://ghp.ml1.one/https://raw.githubusercontent.com/dler-io/Rules/main/Clash/Provider/Proxy.yaml", "path": "./rules/basic/proxy1.yaml" },
   "国内网站": { ...ruleProviderCommon, "behavior": "classical", "url": "https://ghp.ml1.one/https://raw.githubusercontent.com/dler-io/Rules/main/Clash/Provider/Domestic.yaml", "path": "./rules/basic/domestic.yaml" },
   "局域网": { ...ruleProviderCommon, "behavior": "classical", "url": "https://ghp.ml1.one/https://raw.githubusercontent.com/dler-io/Rules/main/Clash/Provider/LAN.yaml", "path": "./rules/basic/lan.yaml" },
 
@@ -174,7 +179,6 @@ const ruleProviders = {
   "国际站点": { ...ruleProviderCommon, "behavior": "domain", "url": "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Global.png", "path": "./rules/basic/global.yaml" }
 };
 
-
 // 代理组通用配置
 const groupBaseOption = {
   "interval": 300,
@@ -232,27 +236,29 @@ function main(config) {
     createProxyGroup("谷歌服务", "select", "https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/google.svg",
       ["节点选择", "自动选择", "香港节点", "台湾节点", "狮城节点", "日本节点", "美国节点", "VPS节点", "其他节点", "DIRECT"]),
     createProxyGroup("微软服务", "select", "https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/microsoft.svg",
-      ["DIRECT", "节点选择", "香港节点", "台湾节点", "狮城节点", "日本节点", "美国节点", "VPS节点", "其他节点"]),
+      ["DIRECT", "节点选择", "自动选择", "香港节点", "台湾节点", "狮城节点", "日本节点", "美国节点", "VPS节点", "其他节点"]),
     createProxyGroup("苹果服务", "select", "https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/apple.svg",
-      ["DIRECT", "节点选择", "香港节点", "台湾节点", "狮城节点", "日本节点", "美国节点", "VPS节点", "其他节点"]),
+      ["DIRECT", "节点选择", "自动选择", "香港节点", "台湾节点", "狮城节点", "日本节点", "美国节点", "VPS节点", "其他节点"]),
     createProxyGroup("电报消息", "select", "https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/telegram.svg",
-      ["节点选择", "香港节点", "台湾节点", "狮城节点", "日本节点", "美国节点", "VPS节点", "其他节点"]),
+      ["节点选择", "自动选择", "香港节点", "台湾节点", "狮城节点", "日本节点", "美国节点", "VPS节点", "其他节点", "DIRECT"]),
     createProxyGroup("加密货币", "select", "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Cryptocurrency_3.png",
-      ["节点选择", "香港节点", "台湾节点", "狮城节点", "日本节点", "美国节点", "VPS节点", "其他节点"]),
+      ["节点选择", "自动选择", "香港节点", "台湾节点", "狮城节点", "日本节点", "美国节点", "VPS节点", "其他节点", "DIRECT"]),
     createProxyGroup("学术网站", "select", "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Scholar.png",
-      ["节点选择", "香港节点", "台湾节点", "狮城节点", "日本节点", "美国节点", "VPS节点", "其他节点"]),
+      ["节点选择", "自动选择", "香港节点", "台湾节点", "狮城节点", "日本节点", "美国节点", "VPS节点", "其他节点", "DIRECT"]),
     createProxyGroup("PayPal", "select", "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/PayPal.png",
-      ["节点选择", "香港节点", "台湾节点", "狮城节点", "日本节点", "美国节点", "VPS节点", "其他节点"]),
-    createProxyGroup("Adobe", "select", "https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/block.svg",
-      ["REJECT", "DIRECT", "节点选择", "香港节点", "台湾节点", "狮城节点", "日本节点", "美国节点", "VPS节点", "其他节点"]),
-    createProxyGroup("国际站点", "select", "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Global.png",
-      ["节点选择", "香港节点", "台湾节点", "狮城节点", "日本节点", "美国节点", "VPS节点", "其他节点"]),
+      ["节点选择", "自动选择", "香港节点", "台湾节点", "狮城节点", "日本节点", "美国节点", "VPS节点", "其他节点", "DIRECT"]),
+    createProxyGroup("Adobe", "select", "https://www.adobe.com/cc-shared/assets/img/product-icons/svg/acrobat-pro-40.svg",
+      ["DIRECT", "REJECT", "节点选择", "香港节点", "台湾节点", "狮城节点", "日本节点", "美国节点", "VPS节点", "其他节点"]),
+    createProxyGroup("Arcgis", "select", "https://www.arcgis.com/graphics/arcgis-online-icon.png",
+      ["DIRECT", "REJECT", "节点选择", "香港节点", "台湾节点", "狮城节点", "日本节点", "美国节点", "VPS节点", "其他节点"]),
+          createProxyGroup("国际站点", "select", "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Global.png",
+      ["节点选择", "自动选择", "香港节点", "台湾节点", "狮城节点", "日本节点", "美国节点", "VPS节点", "其他节点", "DIRECT"]),
 
     // 流媒体分流
     createProxyGroup("国际媒体", "select", "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/ForeignMedia.png",
-      ["节点选择", "香港节点", "台湾节点", "狮城节点", "日本节点", "美国节点", "VPS节点", "其他节点", "自动选择"]),
+      ["节点选择", "香港节点", "台湾节点", "狮城节点", "日本节点", "美国节点", "VPS节点", "其他节点", "自动选择", "DIRECT"]),
     createProxyGroup("油管视频", "select", "https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/YouTube.png",
-      ["国际媒体", "香港节点", "台湾节点", "狮城节点", "日本节点", "美国节点", "VPS节点", "其他节点"]),
+      ["国际媒体", "香港节点", "台湾节点", "狮城节点", "日本节点", "美国节点", "VPS节点", "其他节点", "DIRECT"]),
 
     createProxyGroup("国内媒体", "select", "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/DomesticMedia.png",
       ["DIRECT", "香港节点", "台湾节点", "VPS节点", "节点选择"]),
@@ -297,11 +303,90 @@ function main(config) {
 
   ];
 
+/**
+ * =========================
+ * 代理组后处理：空组删除 + 引用同步清理
+ * （保留 DIRECT / REJECT）
+ * =========================
+ */
+function postProcessProxyGroups(groups, config) {
+  const BUILTIN = new Set(["DIRECT", "REJECT"]);
+
+  // 1) 当前配置中真实存在的代理节点名
+  const allProxyNames = Array.isArray(config?.proxies)
+    ? config.proxies.map(p => p?.name).filter(Boolean)
+    : [];
+
+  // 2) 需要“判空”的代理组及其匹配规则
+  const groupMatchers = new Map([
+    ["香港节点", /香港|HK|Hong|🇭🇰/i],
+    ["台湾节点", /台湾|TW|Taiwan|Wan|🇹🇼/i],
+    ["狮城节点", /新加坡|狮城|SG|Singapore|🇸🇬/i],
+    ["日本节点", /日本|JP|Japan|🇯🇵/i],
+    ["美国节点", /美国|US|United States|America|🇺🇸/i],
+    ["VPS节点", /VPS节点/i],
+    ["其他节点", /其他节点/i],
+  ]);
+
+  // 3) 判断“地区组”是否真的有节点
+  function hasRealNodes(groupName) {
+    const re = groupMatchers.get(groupName);
+    if (!re) return true; // 非地区组不参与判空
+    return allProxyNames.some(name => re.test(name));
+  }
+
+  // 4) 找出需要删除的“空地区代理组”
+  const emptyGroups = new Set();
+  for (const name of groupMatchers.keys()) {
+    if (!hasRealNodes(name)) {
+      emptyGroups.add(name);
+    }
+  }
+
+  // 若没有空组，直接返回
+  if (emptyGroups.size === 0) return groups;
+
+  // 5) 删除空代理组本体（DIRECT / REJECT 不可能在这里）
+  let newGroups = groups.filter(
+    g => !emptyGroups.has(g?.name)
+  );
+
+  // 6) 清理其他代理组中对“空组”的引用
+  newGroups = newGroups.map(group => {
+    if (!group || !Array.isArray(group.proxies)) return group;
+
+    const filtered = group.proxies.filter(p =>
+      BUILTIN.has(p) || !emptyGroups.has(p)
+    );
+
+    return {
+      ...group,
+      proxies: filtered,
+    };
+  });
+
+  // 7) 规则兜底：若规则引用了被删代理组，替换为 节点选择
+  if (Array.isArray(config.rules)) {
+    config.rules = config.rules.map(rule => {
+      if (typeof rule !== "string") return rule;
+      for (const dead of emptyGroups) {
+        if (rule.endsWith("," + dead)) {
+          return rule.replace("," + dead, ",节点选择");
+        }
+      }
+      return rule;
+    });
+  }
+
+  return newGroups;
+}
+
+
   // 设置代理提供商
   config["proxy-providers"] = proxyProviders;
 
-  // 合并所有代理组
-  config["proxy-groups"] = predefinedGroups;
+  // 合并所有代理组（并在刷新时自动清理空地区组 + 同步清理引用）
+  config["proxy-groups"] = postProcessProxyGroups(predefinedGroups, config);
 
   // 设置DNS配置
   config["dns"] = dnsConfig;
@@ -317,12 +402,26 @@ function main(config) {
     "DOMAIN-SUFFIX,xn--ngstr-lra8j.com,谷歌服务",
     "DOMAIN-SUFFIX,github.io,国际站点",
     "DOMAIN,v2rayse.com,国际站点",
-    "DOMAIN-SUFFIX,doc2x.com,中国大陆",
-    "DOMAIN-SUFFIX,noedgeai.com,中国大陆",
+    // "DOMAIN-SUFFIX,doc2x.com,中国大陆",
+    // "DOMAIN-SUFFIX,noedgeai.com,中国大陆",
     "DOMAIN-KEYWORD,cursor,人工智能",
+   
+    //绕过syncthing服务器
+    "DOMAIN-KEYWORD,syncthing,DIRECT",
 
     //adobe拦截    
     "DOMAIN-KEYWORD,adobe,Adobe",
+
+    //esri拦截    
+    "DOMAIN-KEYWORD,arcgis,Arcgis",
+    "DOMAIN-KEYWORD,esri,Arcgis",
+
+
+    "DOMAIN-SUFFIX,qidian.com,广告拦截",
+    // 自定义规则
+    "RULE-SET,自定义拦截,广告拦截",
+    "RULE-SET,自定义直连,全局直连",
+    "RULE-SET,自定义代理,国际站点",
 
     // 第二部分规则
     "AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOIP,CN,no-resolve))),REJECT",
@@ -345,7 +444,6 @@ function main(config) {
     "GEOSITE,Geolocation-!cn,国际站点",
     "GEOSITE,CN,中国大陆",
     "GEOIP,CN,中国大陆,no-resolve",
-
 
     // 应用规则集
     "RULE-SET,人工智能,人工智能",
