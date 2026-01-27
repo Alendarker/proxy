@@ -1,0 +1,7 @@
+payload:
+  # >  自定义规则
+  - DOMAIN-SUFFIX,googleapis.cn
+  - DOMAIN-SUFFIX,gstatic.com
+  - DOMAIN-SUFFIX,xn--ngstr-lra8j.com
+  - DOMAIN-SUFFIX,github.io
+  - DOMAIN,v2rayse.com
